@@ -57,29 +57,40 @@ router.post('/', async (req, res) =>{
     } catch (err) {
         res.status(400).json({ msg: err.message });
     }
-    /*newUser.save()
-        .then(user => res.json(user));
-
-    const newList = new List({
-        userId: newUser._id,
-        list: []
-    });
-
-    newList.save().catch(err => console.log(err));
-    console.log("== New User, List: ", newUser, newList)*/
+    
 });
 
 // @route   DELETE /users/:id
 // @desc    Delete a User
 // @access  Public
-router.delete('/:id', (req, res) =>{
-    User.findById(req.params.id)
+router.delete('/:id', async (req, res) =>{
+    /*User.findById(req.params.id)
         .then(user => user.remove()
             .then(() => res.json({success: true})))
-        .catch(err => res.status(404).json({success: false}));
-    
-    
+      .catch(err => res.status(404).json({success: false}));*/
 
+    try{
+        const user = await User.findById({_id: req.params.id});
+        if(!user) throw Error('No user was found with that id');
+        console.log("-- user: ", user);
+        const removedUser = await user.deleteOne();
+        if(!removedUser) throw Error('Something went wrong with delete User');
+
+        try {
+            /*const list = await List.find({userId: req.params.id});
+            if(!list) throw Error('Could not find list of user');
+            console.log("-- List: ", list);(*/
+            const removeList =  await List.deleteMany({userId: req.params.id});
+            if(!removeList) throw Error('Issue deleting list');
+
+            res.status(200).json({success: true});
+        }catch (err) {
+            res.status(400).json({ msg: err.message });
+        }
+
+    } catch (err) {
+        res.status(400).json({ msg: err.message });
+    }
     
 });
 
