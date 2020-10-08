@@ -1,0 +1,20 @@
+{
+  "name": "mern_book_tracker",
+  "version": "1.0.0",
+  "description": "Book Tracker built with the MERN STACK",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "server": "nodemon server.js"
+  },
+  "author": "Joshua Strozzi",
+  "license": "MIT",
+  "dependencies": {
+    "concurrently": "^5.3.0",
+    "express": "^4.17.1",
+    "mongoose": "^5.10.8"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.4"
+  }
+}
