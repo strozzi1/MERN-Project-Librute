@@ -27,20 +27,3 @@ const userSchema = new Schema ({
 });
 module.exports = User = mongoose.model('user', userSchema);
 
-async function removeUserAndList(userId){
-    const users = await User.find()
-        .sort({date: -1})
-        .then(users => res.json(users));
-
-    return users;
-}
-exports.removeUserAndList = removeUserAndList;
-
-
-async function getUsers(){
-    const users = await User.find()
-        .sort({date: -1});
-
-    return users;
-}
-exports.getUsers = getUsers;
