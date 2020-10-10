@@ -79,7 +79,7 @@ router.delete('/:id', async (req, res) =>{
         try {
             /*const list = await List.find({userId: req.params.id});
             if(!list) throw Error('Could not find list of user');
-            console.log("-- List: ", list);(*/
+            console.log("-- List: ", list);*/
             const removeList =  await List.deleteMany({userId: req.params.id});
             if(!removeList) throw Error('Issue deleting list');
 

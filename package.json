@@ -4,8 +4,11 @@
   "description": "Book Tracker built with the MERN STACK",
   "main": "server.js",
   "scripts": {
+    "client-install": "npm install --prefix client",
     "start": "node server.js",
-    "server": "nodemon server.js"
+    "server": "nodemon server.js",
+    "client": "npm start --prefix client",
+    "dev": "concurrently \"npm run server\" \"npm run client\""
   },
   "author": "Joshua Strozzi",
   "license": "MIT",
