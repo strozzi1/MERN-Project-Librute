@@ -2,24 +2,24 @@ import React, {Component} from 'react';
 import {Container, ListGroup, ListGroupItem, Button} from 'reactstrap';
 import {CSSTransition, TransitionGroup} from 'react-transition-group';
 import {v1 as uuid} from 'uuid';   //For prototyping with static data
+import {connect} from 'react-redux';
+import {getBooks} from '../actions/bookActions';
+import PropTypes from 'prop-types';
+
 
 class BookList extends Component {
-    state = {
-        items: [
-            { id: uuid(), title: 'Exhalation', rating: 9, genre: 'Fiction'},
-            { id: uuid(), title: 'Animal Farm', rating: 8, genre: 'Satire'},
-            { id: uuid(), title: '1984', rating: 9, genre: 'Dystopia'},
-            { id: uuid(), title: 'Stories of Your Life', rating: 9, genre: 'Fiction'},
-        ]
+
+    componentDidMount() {
+        this.props.getBooks();
     }
 
     render(){
-        const { items } = this.state;
+        const { books } = this.props.book;
         return (
             <Container>
                 <ListGroup>
                     <TransitionGroup className="book-list">
-                        {items.map(({id, title, rating, genre}) =>(
+                        {books.map(({id, title, rating, genre}) =>(
                             <CSSTransition key={id} timeout={500} classNames="fade">
                                 <ListGroupItem>
                                     {title}
@@ -32,4 +32,14 @@ class BookList extends Component {
         );
     }
 }
-export default BookList;
+
+BookList.propTypes = {
+    getBooks: PropTypes.func.isRequired,
+    book: PropTypes.object.isRequired
+}
+
+const mapStateToProps = (state) => ({
+    book: state.book                        //book: because in root reducer we named it book
+})
+
+export default connect(mapStateToProps, {getBooks})(BookList);
