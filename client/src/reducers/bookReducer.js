@@ -15,6 +15,13 @@ export default function(state=initialState, action) {
         case GET_BOOKS:
             return {
                 ...state
+            };
+        case DELETE_BOOK:
+            {
+                return {
+                    ...state,
+                    books: state.books.filter(book => book.id !== action.payload)
+                }
             }
         default:
             return state;
