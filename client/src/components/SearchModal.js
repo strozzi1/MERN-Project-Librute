@@ -15,67 +15,77 @@ import { connect } from 'react-redux';
 import {addBook} from '../actions/bookActions';
 import { FaSearch } from 'react-icons/fa';
 import axios from "axios";
+import useDebounce from '../utils/use-debounce';
 
 function SearchModal() {
     
+    //I should separate this out, but this state holds current search items and 
+    //isFetching bool
     let initialState = {
-        //modal: false,
-        //title: '',
         items: [],
         isFetching: false
     };
+    // Gets past into use State hook
     const [state, setState] =  useState(initialState);
     const [modal, setModal] = useState({modal: false});
     const [title, setTitle] = useState({title: ''})
+    
+    // Now we call our hook, passing in the current searchTerm value.
+    // The hook will only return the latest value (what we passed in) ...
+    // ... if it's been more than 500ms since it was last called.
+    // Otherwise, it will return the previous value of searchTerm.
+    // The goal is to only have the API call fire when user stops typing ...
+    // ... so that we aren't hitting our API rapidly.
+    const debouncedSearchTerm = useDebounce(title, 500);
+    
     const toggle = () => {
         setModal({
             modal: !modal.modal
         });
     }
 
-    let onChange = (e) => {
-        
-        //setState({ [e.target.title]: e.target.value });
+    const onChange = (e) => {
         setTitle({ title: e.target.value });
-        /*const query = `https://www.googleapis.com/books/v1/volumes?q=${e.target.value}&key=AIzaSyA2DOGbsIsQqTyOEsyZWXjTAJY-WwEAyjE`
-        fetch(query)
-        .then(res => res.json())
-        .then(json => {
-            setState({
-                items: json.items,
-            })
-        }); */
     }
 
+    // Here's where the API call happens
+    // We use useEffect since this is an asynchronous action
     useEffect(() => {
-      
-        const fetchItems = async () => {
-            
-            //if(title.title == "") state.items = [];
-            try {
-                const query = `https://www.googleapis.com/books/v1/volumes?q=${title.title}&key=AIzaSyA2DOGbsIsQqTyOEsyZWXjTAJY-WwEAyjE`
-                //const query = 'https://www.googleapis.com/demo/v1'
-                setState({items: state.items, isFetching: true});
-                const response = await axios.get(query);
-                console.log(response);
-                
-                setState({items: response.data.items, isFetching: false});
-            } catch (e) {
-                console.log(e);
-                setState({items: state.items, isFetching: false});
-            }
-        };
-        
-        
-        fetchItems();
-        
-    }, [title.title]);
+        // Make sure we have a value (user has entered something in input)
+        if(debouncedSearchTerm.title){
+            setState({isFetching: true});
+            // Fire off our API call
+            fetchItems(debouncedSearchTerm.title).then(results => {
+                setState({isFetching: false, items: results})
+            })
 
+        } else {
+            setState({isFetching: false, items: []});
+        }
+        // Our useEffect function will only execute if this value changes ...
+        // ... and thanks to our hook it will only change if the original ...
+        // value (searchTerm) hasn't changed for more than 500ms.
+    }, [debouncedSearchTerm]);
 
-    const res = state.items;
+    // API search function
+    const fetchItems = async (searchTerm) => {
+ 
+        try {
+            //const query = `https://www.googleapis.com/books/v1/volumes?q=${title.title}&key=AIzaSyA2DOGbsIsQqTyOEsyZWXjTAJY-WwEAyjE`
+            console.log(searchTerm);
+            const query = `https://www.googleapis.com/books/v1/volumes?q=${searchTerm}&key=AIzaSyBCK9Ek9zeKRdfeZuif0S499J25MTFgHFM` //backup key        
+            const response = await axios.get(query);
+            console.log(response.data.items);
+            return response.data.items
+        } catch (e) {
+            console.log(e);
+            return [];
+        }
+    };
+
+    
     let resultsToRender = '';
     if (state.items != undefined){
-        
         const books  = state.items;   
         resultsToRender = <ListGroup>
             {books.map(book => (
