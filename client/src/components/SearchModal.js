@@ -20,13 +20,13 @@ function SearchModal() {
     
     let initialState = {
         //modal: false,
-        title: '',
+        //title: '',
         items: [],
         isFetching: false
     };
     const [state, setState] =  useState(initialState);
     const [modal, setModal] = useState({modal: false});
-
+    const [title, setTitle] = useState({title: ''})
     const toggle = () => {
         setModal({
             modal: !modal.modal
@@ -36,7 +36,7 @@ function SearchModal() {
     let onChange = (e) => {
         
         //setState({ [e.target.title]: e.target.value });
-        setState({ title: e.target.value });
+        setTitle({ title: e.target.value });
         /*const query = `https://www.googleapis.com/books/v1/volumes?q=${e.target.value}&key=AIzaSyA2DOGbsIsQqTyOEsyZWXjTAJY-WwEAyjE`
         fetch(query)
         .then(res => res.json())
@@ -48,35 +48,35 @@ function SearchModal() {
     }
 
     useEffect(() => {
+      
         const fetchItems = async () => {
+            
+            //if(title.title == "") state.items = [];
             try {
-                const query = `https://www.googleapis.com/books/v1/volumes?q=${state.title}&key=AIzaSyA2DOGbsIsQqTyOEsyZWXjTAJY-WwEAyjE`
-                setState({items: state.items, isFetching: true, title: state.title});
+                const query = `https://www.googleapis.com/books/v1/volumes?q=${title.title}&key=AIzaSyA2DOGbsIsQqTyOEsyZWXjTAJY-WwEAyjE`
+                //const query = 'https://www.googleapis.com/demo/v1'
+                setState({items: state.items, isFetching: true});
                 const response = await axios.get(query);
                 console.log(response);
-                setState({items: response.data.items, isFetching: false, title: state.title});
+                
+                setState({items: response.data.items, isFetching: false});
             } catch (e) {
                 console.log(e);
-                setState({items: state.items, isFetching: false, title: ''});
+                setState({items: state.items, isFetching: false});
             }
         };
+        
+        
         fetchItems();
-    }, [state.title]);
+        
+    }, [title.title]);
 
-    /*useEffect(() => {
-        const fetchItems = async () => {
-            const query = `https://www.googleapis.com/books/v1/volumes?q=${state.title}&key=AIzaSyA2DOGbsIsQqTyOEsyZWXjTAJY-WwEAyjE`;
-            const response = await axios.get(query);
-            setState({items: response.data.items, title: state.title});
-            
-        };
-        fetchItems();
-    }, [state.title]);*/
 
     const res = state.items;
     let resultsToRender = '';
-    if (state.items > 0){
-        const { books }  = state.items;   
+    if (state.items != undefined){
+        
+        const books  = state.items;   
         resultsToRender = <ListGroup>
             {books.map(book => (
             <ListGroupItem key={book.id}>
@@ -103,6 +103,7 @@ function SearchModal() {
                     name="title"
                     id="search"
                     placeholder="Search Books..."
+                    autoComplete="off"
                     onChange={onChange} 
                 >
                 </Input>
