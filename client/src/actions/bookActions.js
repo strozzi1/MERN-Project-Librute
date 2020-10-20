@@ -13,9 +13,9 @@ export const deleteBook = (id) => {
     }
 }
 
-export const addBook = (apiId) => {
+export const addBook = (bookObject) => {
     return {
         type: ADD_BOOK,
-        payload: apiId
+        payload: bookObject 
     }
 }
