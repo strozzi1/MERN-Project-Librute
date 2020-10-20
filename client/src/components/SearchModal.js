@@ -46,6 +46,13 @@ function SearchModal() {
         setModal({
             modal: !modal.modal
         });
+        setTitle({
+            title: ''
+        });
+        setState({
+            items: [],
+            isFetching: false
+        })
     }
 
     const onChange = (e) => {
