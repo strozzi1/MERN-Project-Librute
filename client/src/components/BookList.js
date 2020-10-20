@@ -24,16 +24,15 @@ class BookList extends Component {
                     <TransitionGroup className="book-list">
                         {books.map(({id, title, rating, genre}) =>(
                             <CSSTransition key={id} timeout={500} classNames="fade">
-                                <ListGroupItem>
-                                    <button
-                                    className="removeButton"
+                                <ListGroupItem className="d-flex justify-content-between align-items-center">
+                                    {title}
+                                    <Button
                                     color="danger"
                                     size="sm"
                                     onClick={this.onDeleteClick.bind(this, id)}
                                     >
 
-                                    </button>
-                                    {title}
+                                    </Button>
                                 </ListGroupItem>
                             </CSSTransition>
                         ))}

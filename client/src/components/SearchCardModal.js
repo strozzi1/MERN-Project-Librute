@@ -29,13 +29,14 @@ function SearchCardModal(props) {
         });
     }
 
+    const thumbnailImage = volumeInfo.imageLinks ? <img src={volumeInfo.imageLinks.thumbnail}/> : <img style={{width: 128, height: 197}} src="https://mel.cgiar.org/graph/getthumbhash/hash/wZ6S6117/fetchthumbs/1/file_type/pdf"/>
     return (
         <div>
             <Button color="info" onClick={toggleCard}>+</Button>
             <Modal isOpen={cardModal.modal} toggle={toggleCard} key={id}>
                 <ModalHeader toggle={toggleCard}>{volumeInfo.title}</ModalHeader>
                 <ModalBody>
-                    <img src={volumeInfo.imageLinks.thumbnail}/>
+                    {thumbnailImage}
                     <br/>
                     {volumeInfo.description}
                 </ModalBody>
