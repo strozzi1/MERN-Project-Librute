@@ -26,4 +26,7 @@
   color: darkgrey;
 }
 
-
+.float-right{
+  float: right;
+  display: inline-block;
+}

@@ -1,4 +1,5 @@
 import React, {Component, useState, useEffect} from 'react';
+
 import {
     Container,
     Modal,
@@ -7,6 +8,8 @@ import {
     Form,
     FormGroup,
     Label,
+    Media,
+    Spinner,
     Input,
     ListGroup,
     ListGroupItem
@@ -16,6 +19,7 @@ import {addBook} from '../actions/bookActions';
 import { FaSearch } from 'react-icons/fa';
 import axios from "axios";
 import useDebounce from '../utils/use-debounce';
+import SearchCardModal from './SearchCardModal';
 
 function SearchModal() {
     
@@ -83,18 +87,24 @@ function SearchModal() {
         }
     };
 
+    const truncate = (str) => {
+        return str.length > 45 ? str.substring(0, 45) + '...' : str;
+    }
     
     let resultsToRender = '';
-    if (state.items != undefined){
+    if (state.items !== undefined){
         const books  = state.items;   
         resultsToRender = <ListGroup>
             {books.map(book => (
-            <ListGroupItem key={book.id}>
-                {book.volumeInfo.title}
+            <ListGroupItem key={book.id} className="d-flex justify-content-between align-items-center">
+                {truncate(book.volumeInfo.title)} <SearchCardModal book={book}/>
             </ListGroupItem>
             ))} 
         </ListGroup>
-        }
+    }
+    else{
+        resultsToRender = <div><Spinner color="dark" /></div>
+    }
         return(
             <div>
                 <FaSearch 
@@ -117,9 +127,9 @@ function SearchModal() {
                     onChange={onChange} 
                 >
                 </Input>
-                <Container>
-                    {resultsToRender}
-                </Container>
+                
+                {resultsToRender}
+                
                 
 
             </Modal>

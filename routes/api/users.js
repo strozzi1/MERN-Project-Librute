@@ -27,7 +27,7 @@ router.get('/', async (req, res) =>{
 // @route   GET api/users/username/animelist
 // @desc    Get animelist of user by username
 // @access  Public
-router.get('/:username/animelist', async (req, res) =>{
+router.get('/:username/booklist', async (req, res) =>{
     
     
     try {
