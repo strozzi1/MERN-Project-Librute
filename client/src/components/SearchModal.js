@@ -104,7 +104,7 @@ function SearchModal() {
         resultsToRender = <ListGroup>
             {books.map(book => (
             <ListGroupItem key={book.id} className="d-flex justify-content-between align-items-center">
-                {truncate(book.volumeInfo.title)} <SearchCardModal book={book}/>
+                {truncate(book.volumeInfo.title)} <SearchCardModal item={book}/>
             </ListGroupItem>
             ))} 
         </ListGroup>
