@@ -36,8 +36,8 @@ function SearchCardModal(props) {
     const onSubmit = () => {
         const newBook = {
             title: volumeInfo.title,
-            genre: volumeInfo.categories[0] ? volumeInfo.categories : 'Unknown',
-            author: volumeInfo.authors[0] ? volumeInfo.authors : 'Unknown',
+            genre: volumeInfo.categories ? volumeInfo.categories[0] : 'Unknown',
+            author: volumeInfo.authors ? volumeInfo.authors[0] : 'Unknown',
             description: volumeInfo.description,
             imageLinks: volumeInfo.imageLinks ? volumeInfo.imageLinks.smallThumbnail : '',
             id: id,
@@ -93,7 +93,7 @@ function SearchCardModal(props) {
 }
 
 const mapStateToProps = (state) => {
-    console.log("This is the redux State: ", state);
+    
     return { book: state.book }
 }
 

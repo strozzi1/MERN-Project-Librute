@@ -133,12 +133,8 @@ function SearchModal() {
                     autoComplete="off"
                     onChange={onChange} 
                 >
-                </Input>
-                
+                </Input>              
                 {resultsToRender}
-                
-                
-
             </Modal>
 
             </div>

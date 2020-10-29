@@ -19,7 +19,9 @@ export default function(state=initialState, action) {
             };
         case GET_BOOKS:
             return {
-                ...state
+                ...state,
+                books: action.payload,
+                loading: false
             };
         case DELETE_BOOK:
             {
