@@ -9,6 +9,7 @@ import PropTypes from 'prop-types';
 class BookList extends Component {
 
     componentDidMount() {
+        console.log("getBooks");
         this.props.getBooks();
     }
 
@@ -18,6 +19,7 @@ class BookList extends Component {
 
     render(){
         const { books } = this.props.book;
+        console.log(books);
         return (
             <Container>
                 <ListGroup>
@@ -48,8 +50,9 @@ BookList.propTypes = {
     book: PropTypes.object.isRequired
 }
 
-const mapStateToProps = (state) => ({
-    book: state.book                        //book: because in root reducer we named it book
-})
+const mapStateToProps = (state) => {
+    //console.log(state);
+    return {book: state.book}                        //book: because in root reducer we named it book
+}
 
 export default connect(mapStateToProps, {getBooks, deleteBook})(BookList);

@@ -39,13 +39,14 @@ router.get('/:username/booklist', async (req, res) =>{
             if(!list) throw Error('no list found for this user');
             res.status(200).json(list);
         }catch(err){
-            res.status(400).json({ msg: e.message });
+            //res.status(500).json(users);
+            res.status(500).json({ msg: e.message });
         }
 
 
-        res.status(200).json(users);
+        
     } catch (e) {
-        res.status(400).json({ msg: e.message });
+        res.status(500).json({ msg: e.message });
     }
 });
 
