@@ -14,6 +14,8 @@ class BookList extends Component {
     }
 
     onDeleteClick = (id) => {
+        //let idObj={};
+        //idObj.id = id;
         this.props.deleteBook(id);
     }
 
