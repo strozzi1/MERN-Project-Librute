@@ -1,4 +1,4 @@
-import React, {Component, useState, useEffect} from 'react';
+import React, {useState} from 'react';
 
 import {
     Container,
@@ -7,7 +7,6 @@ import {
     ModalFooter,
     ModalBody,
     Button,
-    Grid,
     Row,
     Col
 } from 'reactstrap';
@@ -56,7 +55,7 @@ function SearchCardModal(props) {
     };
 
 
-    const thumbnailImage = volumeInfo.imageLinks ? <img src={volumeInfo.imageLinks.thumbnail}/> : <img style={{width: 128, height: 197}} src="https://mel.cgiar.org/graph/getthumbhash/hash/wZ6S6117/fetchthumbs/1/file_type/pdf"/>
+    const thumbnailImage = volumeInfo.imageLinks ? <img alt="Book Thumbnail" src={volumeInfo.imageLinks.thumbnail}/> : <img style={{width: 128, height: 197}} alt="Book missing Thumbnail" src="https://mel.cgiar.org/graph/getthumbhash/hash/wZ6S6117/fetchthumbs/1/file_type/pdf"/>
     const bookAuthor = volumeInfo.authors ? <strong>Authored by {volumeInfo.authors[0]}</strong> : <span>Authored by Unknown</span>
     const bookGenre = volumeInfo.categories ? <span>{volumeInfo.categories[0]}</span> : <span></span>
     const bookDetails = <Col>{bookAuthor}<br/>{bookGenre} </Col>
