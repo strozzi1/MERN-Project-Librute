@@ -5,7 +5,7 @@ const fetch = require('node-fetch');
 const axios = require('axios');
 
 const { json } = require('express');
-const { GOOGLE_API_KEY } = require('../../config/keys');
+const GOOGLE_API_KEY = process.env.REACT_APP_GOOGLE_API_KEY || require('../../config/keys').GOOGLE_API_KEY;
 
 const app = express();
 

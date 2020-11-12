@@ -10,8 +10,8 @@ const app = express();
 app.use(express.json());
 
 // DB Config
-const db = require('./config/keys').mongoURI || process.env.DB_URI;
-
+const db = process.env.DB_URI || require('./config/keys').mongoURI;
+console.log(process.env.DB_URI);
 // connect to Mongo
 mongoose
     .connect(db, {useNewUrlParser: true})
