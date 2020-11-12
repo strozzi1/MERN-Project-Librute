@@ -77,8 +77,7 @@ function SearchModal() {
         try {
            
             console.log(searchTerm);
-            //const query = `https://www.googleapis.com/books/v1/volumes?q=${searchTerm}&key=${process.env.REACT_APP_GOOGLE_API_KEY}` //backup key        
-            //const response = await axios.get(query);
+            
             const response = await axios.get(`/google-books/${searchTerm}`);
             console.log(response.data.items);
             return response.data.items
