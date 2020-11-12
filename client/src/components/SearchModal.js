@@ -75,10 +75,11 @@ function SearchModal() {
     const fetchItems = async (searchTerm) => {
  
         try {
-            //const query = `https://www.googleapis.com/books/v1/volumes?q=${title.title}&key=AIzaSyA2DOGbsIsQqTyOEsyZWXjTAJY-WwEAyjE`
+           
             console.log(searchTerm);
-            const query = `https://www.googleapis.com/books/v1/volumes?q=${searchTerm}&key=AIzaSyBCK9Ek9zeKRdfeZuif0S499J25MTFgHFM` //backup key        
-            const response = await axios.get(query);
+            //const query = `https://www.googleapis.com/books/v1/volumes?q=${searchTerm}&key=${process.env.REACT_APP_GOOGLE_API_KEY}` //backup key        
+            //const response = await axios.get(query);
+            const response = await axios.get(`/google-books/${searchTerm}`);
             console.log(response.data.items);
             return response.data.items
         } catch (e) {
