@@ -1,6 +1,5 @@
 import axios from 'axios';
 import {GET_BOOKS, ADD_BOOK, DELETE_BOOK, BOOKS_LOADING} from './types';
-const username = "test4";
 const uid = "5fa37c6c5c81861184e065fd"
 export const getBooks = () => dispatch => {
     dispatch(setBooksLoading());

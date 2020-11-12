@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 
 // Our hook || Source: https://dev.to/gabe_ragland/debouncing-with-react-hooks-jci
 export default function useDebounce(value, delay) {

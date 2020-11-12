@@ -1,21 +1,14 @@
-import React, {Component, useState, useEffect} from 'react';
+import React, {useState, useEffect} from 'react';
 
 import {
-    Container,
     Modal,
-    ModalHeader,
-    ModalBody,
-    Form,
-    FormGroup,
-    Label,
-    Media,
     Spinner,
     Input,
     ListGroup,
     ListGroupItem
 } from 'reactstrap';
 import { connect } from 'react-redux';
-import {addBook} from '../actions/bookActions';
+//import {addBook} from '../actions/bookActions';
 import { FaSearch } from 'react-icons/fa';
 import axios from "axios";
 import useDebounce from '../utils/use-debounce';

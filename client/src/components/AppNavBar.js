@@ -7,11 +7,7 @@ import {
   Nav,
   NavItem,
   NavLink,
-  UncontrolledDropdown,
-  DropdownToggle,
-  DropdownMenu,
-  DropdownItem,
-  NavbarText, Container
+  Container
 } from 'reactstrap';
 import SearchModal from './SearchModal';
 
