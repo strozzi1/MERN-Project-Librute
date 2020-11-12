@@ -7,12 +7,9 @@ import {
   Nav,
   NavItem,
   NavLink,
-  UncontrolledDropdown,
-  DropdownToggle,
-  DropdownMenu,
-  DropdownItem,
-  NavbarText, Container
+  Container
 } from 'reactstrap';
+import SearchModal from './SearchModal';
 
 class AppNavbar extends Component {
     state = {
@@ -40,8 +37,10 @@ class AppNavbar extends Component {
                                     GitHub
                                 </NavLink>
                             </NavItem>
+                            
                         </Nav>
                     </Collapse>
+                    <SearchModal/>
                 </Container>
             </Navbar>
         </div>

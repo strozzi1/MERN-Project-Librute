@@ -23,40 +23,81 @@ router.get('/', async (req, res) =>{
 });
 
 
+
+// @route   GET api/users/username/animelist
+// @desc    Get animelist of user by username
+// @access  Public
+router.get('/:username/booklist', async (req, res) =>{
+    
+    
+    try {
+        const user = await User.findOne({username: req.params.username});
+        if (!user) throw Error('No user of that username found');
+        
+        try{
+            const list = await List.findOne({userId: user._id});
+            if(!list) throw Error('no list found for this user');
+            res.status(200).json(list);
+        }catch(err){
+            //res.status(500).json(users);
+            res.status(500).json({ msg: e.message });
+        }
+
+
+        
+    } catch (e) {
+        res.status(500).json({ msg: e.message });
+    }
+});
+
+
 // @route   POST /users
-// @desc    Create a User
+// @desc    Create a User, create a list with link to user
+//          make sure username isn't taken
+//
 // @access  Public
 router.post('/', async (req, res) =>{
-    if(!req.body.username && !req.body.password) res.status(500).json({message: "Need usrnm & pswd"})
+    if(!req.body.email && !req.body.username && !req.body.password) res.status(500).json({message: "Need usrnm, pswd and email"})
     
     const newUser = new User({
         username: req.body.username,
-        password: req.body.password
+        password: req.body.password,
+        email: req.body.email
     });
-    
-    try {
-        const insertUser = await newUser.save();
-        if(!insertUser) throw Error('Something went wrong saving a user');
-
-        try{
-            const newList = new List({
-                userId: newUser._id,
-                list: []
-            });
-
-            const insertList = await newList.save();
-            if(!insertList) throw Error('Something went wrong adding list to user')
-
-            res.status(200).json({
-                user: insertUser,
-                list: insertList
-            })
+    //check if username is taken
+    try{
+        const usernameTaken = await User.findOne({username: req.body.username});
+        if(usernameTaken) throw Error('Username was taken');
+        // try to save new user
+        try {
+            const insertUser = await newUser.save();
+            if(!insertUser) throw Error('Something went wrong saving a user');
+            //try to add a list with userId of new user
+            try{
+                const newList = new List({
+                    userId: newUser._id,
+                    list: []
+                });
+                
+                const insertList = await newList.save();
+                if(!insertList) throw Error('Something went wrong adding list to user')
+                //return status
+                res.status(200).json({
+                    user: insertUser,
+                    list: insertList
+                })
+            } catch (err) {
+                res.status(400).json({ msg: err.message });
+            }
         } catch (err) {
             res.status(400).json({ msg: err.message });
         }
-    } catch (err) {
+
+    }catch(err){
         res.status(400).json({ msg: err.message });
     }
+    
+    
     
 });
 
@@ -88,6 +129,23 @@ router.delete('/:id', async (req, res) =>{
             res.status(400).json({ msg: err.message });
         }
 
+    } catch (err) {
+        res.status(400).json({ msg: err.message });
+    }
+    
+});
+
+
+
+// @route   GET /users/:username
+// @desc    Get a User by username
+// @access  Public
+router.get('/:username', async (req, res) =>{
+
+    try{
+        const user = await User.findOne({username: req.params.username});
+        if(!user) throw Error('No user was found with that username: ', username);
+        res.status(200).json({user: user});
     } catch (err) {
         res.status(400).json({ msg: err.message });
     }

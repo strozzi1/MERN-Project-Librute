@@ -8,14 +8,18 @@
     "start": "node server.js",
     "server": "nodemon server.js",
     "client": "npm start --prefix client",
-    "dev": "concurrently \"npm run server\" \"npm run client\""
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client"
   },
+  "heroku-run-build-script": true,
   "author": "Joshua Strozzi",
   "license": "MIT",
   "dependencies": {
+    "axios": "^0.21.0",
     "concurrently": "^5.3.0",
     "express": "^4.17.1",
-    "mongoose": "^5.10.8"
+    "mongoose": "^5.10.8",
+    "node-fetch": "^2.6.1"
   },
   "devDependencies": {
     "nodemon": "^2.0.4"
